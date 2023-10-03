@@ -1,0 +1,23 @@
+
+<!DOCTYPE HTML>
+<!--
+	Read Only by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Eric Nelson</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="static/assets/css/main.css" />
+		<style> {
+		background-color: rgb(54, 59, 48)
+		}
+		</style>
+	</head>
+    {% for article in response %}
+    <div>{{article}}</div>
+    {% endfor %}
+</html>
+
