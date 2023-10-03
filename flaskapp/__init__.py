@@ -11,7 +11,6 @@ def home():
 
 @app.route("/news", methods=["GET", "POST"])
 def news():
-    import requests
 
     url = "https://lly1yqp3p6.execute-api.us-east-1.amazonaws.com/Prod/newsreader"
     payload = "{\r\n  \"sentiment\": \"NEUTRAL\"\r\n}"
