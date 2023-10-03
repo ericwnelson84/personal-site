@@ -10,3 +10,5 @@ WTForms==3.0.1
 SQLAlchemy==2.0.19
 psycopg2-binary==2.9.6
 uwsgi==2.0.18
+requests
+json
