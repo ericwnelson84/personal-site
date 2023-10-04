@@ -11,3 +11,4 @@ SQLAlchemy==2.0.19
 psycopg2-binary==2.9.6
 uwsgi==2.0.18
 requests==2.26.0
+boto3
