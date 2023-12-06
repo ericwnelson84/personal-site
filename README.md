@@ -1,7 +1,7 @@
 # Flask Personal Site
 
 
-![Screenshot of site]()
+![Screenshot of site](assets/screenshot.jpg)
 
 
 
