@@ -9,7 +9,7 @@ This is my personal site with resume items etc
 
 
 
-## Instructions
+## More information
 
 This site includes my resume
 
