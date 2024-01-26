@@ -82,7 +82,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Subnets: !Ref SubnetId
-      SecurityGroups: [!Ref LoadBalancerSecurityGroup]
+      SecurityGroups: [!Ref ALBSG]
       Scheme: internet-facing
 
   ALBSG:
