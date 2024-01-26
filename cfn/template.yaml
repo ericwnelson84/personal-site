@@ -133,3 +133,6 @@ Outputs:
   LoadBalancerDNS:
     Description: DNS name of the Load Balancer
     Value: !GetAtt LoadBalancer.DNSName
+  SiteDomainName:
+    Description: public Domain name
+    Value: !Ref DomainName
