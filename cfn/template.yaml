@@ -43,6 +43,8 @@ Resources:
       KeyName: !Ref KeyName
       ImageId: !Ref Image
       SubnetId: !Select [0, !Ref SubnetId]
+      SecurityGroups: 
+        - !Ref EC2SecurityGroup
       UserData:
         Fn::Base64: !Sub |
           yum update -y
@@ -77,6 +79,25 @@ Resources:
           systemctl restart nginx
           systemctl enable nginx
           echo 'Install complete'
+
+  EC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow SSH, HTTP, and HTTPS inbound traffic
+      VpcId: !Ref VPCId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
 
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
