@@ -34,11 +34,16 @@ Parameters:
     Type: String
     Description: AMI image id
     Default: ami-0bb4c991fa89d4b9b
+  EC2RoleName:
+      Type: String
+      Description: The name of the existing IAM role to assign to the EC2 instance
+      Default: ec2-s3-codecommit-read-only-role
 
 Resources:
   EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
+      IamInstanceProfile: !Ref EC2Profile
       InstanceType: !Ref EC2InstanceType
       KeyName: !Ref KeyName
       ImageId: !Ref Image
@@ -46,7 +51,7 @@ Resources:
       SecurityGroupIds: 
         - !GetAtt EC2SecurityGroup.GroupId
       UserData:
-        Fn::Base64: !Sub |
+        Fn::Base64: |
           #!/bin/bash
           yum update -y
           amazon-linux-extras install epel -y # this package has items for certbot used for SSL encryption. may need this command later yum install certbot python2-certbot-nginx
@@ -96,7 +101,11 @@ Resources:
       SecurityGroups: [!Ref ALBSG]
       Scheme: internet-facing
 
-
+  EC2Profile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref EC2RoleName
 
   ALBSG:
     Type: AWS::EC2::SecurityGroup
