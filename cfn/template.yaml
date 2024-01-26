@@ -33,7 +33,7 @@ Parameters:
   Image:
     Type: String
     Description: AMI image id
-    Default: ami-008677ef1baf82eaf
+    Default: ami-0bb4c991fa89d4b9b
 
 Resources:
   EC2Instance:
