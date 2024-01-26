@@ -5,7 +5,6 @@ CFN_PATH="/workspace/PERSONAL-SITE-WITH-FLASK/cfn/template.yaml"
 
 echo $CFN_PATH
 
-
 aws cloudformation deploy \
   --stack-name "personal-site" \
   --s3-bucket $BUCKET \
