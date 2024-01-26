@@ -33,7 +33,7 @@ Parameters:
   Image:
     Type: String
     Description: AMI image id
-    Default: ami-0a3c3a20c09d6f377
+    Default: ami-008677ef1baf82eaf
 
 Resources:
   EC2Instance:
@@ -88,7 +88,6 @@ Resources:
   ALBSG:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: !Sub "${AWS::StackName}AlbSG"
       GroupDescription: Public Facing SG 
       VpcId: !Ref VPCId
       SecurityGroupIngress:
