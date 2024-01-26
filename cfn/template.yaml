@@ -85,11 +85,23 @@ Resources:
       SecurityGroups: [!Ref LoadBalancerSecurityGroup]
       Scheme: internet-facing
 
-  LoadBalancerSecurityGroup:
+  ALBSG:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Security Group for Load Balancer
+      GroupName: !Sub "${AWS::StackName}AlbSG"
+      GroupDescription: Public Facing SG 
       VpcId: !Ref VPCId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: '0.0.0.0/0'
+          Description: INTERNET HTTPS
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: '0.0.0.0/0'
+          Description: INTERNET HTTP
 
   ListenerHTTPS:
     Type: AWS::ElasticLoadBalancingV2::Listener
@@ -125,6 +137,8 @@ Resources:
       VpcId: !Ref VPCId
       Targets:
         - Id: !Ref EC2Instance
+
+
 
   Route53RecordSet:
     Type: AWS::Route53::RecordSet
