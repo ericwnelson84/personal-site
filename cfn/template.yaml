@@ -43,8 +43,8 @@ Resources:
       KeyName: !Ref KeyName
       ImageId: !Ref Image
       SubnetId: !Select [0, !Ref SubnetId]
-      SecurityGroups: 
-        - !Ref EC2SecurityGroup
+      SecurityGroupIds: 
+        - !GetAtt EC2SecurityGroup.GroupId
       UserData:
         Fn::Base64: !Sub |
           yum update -y
@@ -102,9 +102,13 @@ Resources:
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
+      Type: application
+      IpAddressType: ipv4
       Subnets: !Ref SubnetId
       SecurityGroups: [!Ref ALBSG]
       Scheme: internet-facing
+
+
 
   ALBSG:
     Type: AWS::EC2::SecurityGroup
