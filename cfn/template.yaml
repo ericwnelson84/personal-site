@@ -5,18 +5,23 @@ Parameters:
   VPCId:
     Type: AWS::EC2::VPC::Id
     Description: VPC Id
+    Default: vpc-0f7fdc63492ffd0fd
   SubnetId:
     Type: List<AWS::EC2::Subnet::Id>
     Description: Subnet Ids
+    Default: subnet-05589a844e7794bab
   DomainName:
     Type: String
     Description: The domain name for the Route 53 record
+    Default: https://ericwnelson.info
   HostedZoneId:
     Type: AWS::Route53::HostedZone::Id
     Description: The ID of the hosted zone
+    Default: Z067262125LOC1N9Y8UB8
   SSLCertificateArn:
     Type: String
     Description: The ARN of the SSL certificate from ACM
+    Default: arn:aws:acm:us-east-1:088478797243:certificate/1a5bc097-f361-4b6f-b8c1-5f8654f7f51c
   EC2InstanceType:
     Type: String
     Default: t2.micro
@@ -24,6 +29,7 @@ Parameters:
   KeyName:
     Type: AWS::EC2::KeyPair::KeyName
     Description: Key pair for EC2 instance
+    Default: personal-website
 
 Resources:
   EC2Instance:
