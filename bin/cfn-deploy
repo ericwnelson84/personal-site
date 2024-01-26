@@ -5,16 +5,16 @@ CFN_PATH="/workspace/personal-site-with-Flask/cfn/template.yaml"
 
 echo $CFN_PATH
 
-aws cloudformation validate-template --template-body file://$CFN_PATH
+# aws cloudformation validate-template --template-body file://$CFN_PATH
 
 
-# aws cloudformation deploy \
-#   --stack-name "personal-site" \
-#   --s3-bucket "cfn-artifacts-ewn" \
-#   --s3-prefix "personal-site" \
-#   --region "us-east-1" \
-#   --template-file "$CFN_PATH" \
-#   --tags group="personal-site" \
-#   --capabilities CAPABILITY_NAMED_IAM 
+aws cloudformation deploy \
+  --stack-name "personal-site" \
+  --s3-bucket "cfn-artifacts-ewn" \
+  --s3-prefix "personal-site" \
+  --region "us-east-1" \
+  --template-file "$CFN_PATH" \
+  --tags group="personal-site" \
+  --capabilities CAPABILITY_NAMED_IAM 
 
   # --no-execute-changeset \
