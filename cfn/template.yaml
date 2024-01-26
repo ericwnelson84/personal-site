@@ -1,0 +1,106 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to deploy an EC2 instance behind an ALB with SSL, Route 53, and CodeCommit integration.
+
+Parameters:
+  VPCId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC Id
+  SubnetId:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: Subnet Ids
+  DomainName:
+    Type: String
+    Description: The domain name for the Route 53 record
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    Description: The ID of the hosted zone
+  SSLCertificateArn:
+    Type: String
+    Description: The ARN of the SSL certificate from ACM
+  EC2InstanceType:
+    Type: String
+    Default: t2.micro
+    Description: EC2 instance type
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Key pair for EC2 instance
+
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref EC2InstanceType
+      KeyName: !Ref KeyName
+      ImageId: ami-12345678 # Replace with the appropriate AMI ID
+      SubnetId: !Select [0, !Ref SubnetId]
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum update -y
+          # Add commands to pull code from AWS CodeCommit
+
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Subnets: !Ref SubnetId
+      SecurityGroups: [!Ref LoadBalancerSecurityGroup]
+      Scheme: internet-facing
+
+  LoadBalancerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security Group for Load Balancer
+      VpcId: !Ref VPCId
+
+  ListenerHTTPS:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      SslPolicy: ELBSecurityPolicy-2016-08
+      Certificates:
+        - CertificateArn: !Ref SSLCertificateArn
+
+  ListenerHTTP:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: redirect
+          RedirectConfig:
+            Protocol: HTTPS
+            Port: 443
+            StatusCode: HTTP_301
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 80
+      Protocol: HTTP
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Port: 80
+      Protocol: HTTP
+      VpcId: !Ref VPCId
+      Targets:
+        - Id: !Ref EC2Instance
+
+  Route53RecordSet:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainName
+      Type: A
+      AliasTarget:
+        DNSName: !GetAtt LoadBalancer.DNSName
+        HostedZoneId: !GetAtt LoadBalancer.CanonicalHostedZoneID
+
+Outputs:
+  EC2InstanceId:
+    Description: Instance Id of the new EC2 instance
+    Value: !Ref EC2Instance
+  LoadBalancerDNS:
+    Description: DNS name of the Load Balancer
+    Value: !GetAtt LoadBalancer.DNSName
