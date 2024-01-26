@@ -9,7 +9,7 @@ Parameters:
   SubnetId:
     Type: List<AWS::EC2::Subnet::Id>
     Description: Subnet Ids
-    Default: subnet-05589a844e7794bab
+    Default: subnet-05589a844e7794bab,subnet-04b1163e8330b22f9
   DomainName:
     Type: String
     Description: The domain name for the Route 53 record
@@ -30,6 +30,10 @@ Parameters:
     Type: AWS::EC2::KeyPair::KeyName
     Description: Key pair for EC2 instance
     Default: personal-website
+  Image:
+    Type: String
+    Description: AMI image id
+    Default: ami-0a3c3a20c09d6f377
 
 Resources:
   EC2Instance:
@@ -37,7 +41,7 @@ Resources:
     Properties:
       InstanceType: !Ref EC2InstanceType
       KeyName: !Ref KeyName
-      ImageId: ami-12345678 # Replace with the appropriate AMI ID
+      ImageId: !Ref Image
       SubnetId: !Select [0, !Ref SubnetId]
       UserData:
         Fn::Base64: !Sub |
