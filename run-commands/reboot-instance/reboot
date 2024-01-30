@@ -1,13 +1,11 @@
 #! /usr/bin/env bash
 
 
-CFN_PATH="/workspace/personal-site-with-Flask/run-commands/reboot-instance/reboot.json"
-
-echo $CFN_PATH
-
 
 aws ssm send-command \
-    --document-name $CFN_PATH \
-    --targets "Key=instanceids,Values=i-0e5daa43d7c49c964" \
+    --document-name Reboot-Instance \
+    --instance-ids i-0e5daa43d7c49c964 \
     --comment "Reboot instance" \
     --region "us-east-1"
+
+    # --targets "Key=instanceids,Values=i-0e5daa43d7c49c964" \
