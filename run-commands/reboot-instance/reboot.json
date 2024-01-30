@@ -1,0 +1,14 @@
+{
+    "schemaVersion": "2.2",
+    "description": "Document to reboot an EC2 instance",
+    "parameters": {},
+    "mainSteps": [
+      {
+        "action": "aws:runShellScript",
+        "name": "rebootInstance",
+        "inputs": {
+          "runCommand": ["sudo reboot"]
+        }
+      }
+    ]
+  }
