@@ -6,10 +6,6 @@ pip install -r config/requirements.txt
 
 chown -R ec2-user:nginx /var/www
 
-# Note: assuming port 8080 is open, you can test that the app will 
-# run under uwsgi manually using the following
-# uwsgi --socket 0.0.0.0:8080 --protocol=http -w flaskapp:app
-
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf-orig
 cp config/nginx.conf /etc/nginx/nginx.conf
 
