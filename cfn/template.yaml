@@ -68,6 +68,8 @@ Resources:
           # update me
           git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/personal-site /var/www
           cd /var/www
+          chmod 777 setup-cloudwatch-agent.sh
+          ./setup-cloudwatch-agent.sh
           git config core.fileMode false
           # update me. for storing env variables in s3
           # aws s3 cp s3://korben-bucket/simple-flask/.env .env
