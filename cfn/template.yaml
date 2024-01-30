@@ -47,6 +47,7 @@ Resources:
       InstanceType: !Ref EC2InstanceType
       KeyName: !Ref KeyName
       ImageId: !Ref Image
+      Monitoring: true
       SubnetId: !Select [0, !Ref SubnetId]
       SecurityGroupIds: 
         - !GetAtt EC2SecurityGroup.GroupId
