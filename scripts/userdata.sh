@@ -21,6 +21,8 @@ git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/personal-site 
 cd /var/www
 
 # Run cloudwatch script here. be sure to give full permissions
+chmod 777 setup-cloudwatch-agent.sh
+./setup-cloudwatch-agent.sh
 
 git config core.fileMode false
 
