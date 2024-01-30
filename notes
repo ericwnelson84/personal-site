@@ -1,1 +1,34 @@
-ami-0bb4c991fa89d4b9b
+TODO
+- set up cloudwatch log reporting from EC2
+
+
+commands to intall cloudwatch agent and set up reporting to cloudwatch
+- generate config file. there is a amazon-cloudwatch-agent-config-wizard but you have to launch it from the EC2 instance
+
+sudo yum install -y amazon-cloudwatch-agent
+
+sudo amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:config.json -s # this command should fetch the config file and starts the cloudwatch agent
+
+
+  EC2CloudwatchRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: CloudWatchLogsPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - logs:DescribeLogStreams
+                Resource: '*'
