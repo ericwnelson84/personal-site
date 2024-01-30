@@ -1,6 +1,9 @@
 TODO
 - set up cloudwatch log reporting from EC2
 
+
+git remote get-url origin
+
 aws cloudwatch list-metrics --namespace AWS/EC2 --region us-east-1
 
 commands to intall cloudwatch agent and set up reporting to cloudwatch
