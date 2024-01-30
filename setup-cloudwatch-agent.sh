@@ -40,7 +40,7 @@ def install_cw_agent():
     if os.path.isfile("/etc/os-release"):
         with open("/etc/os-release") as f:
             os_release = f.read()
-        if 'ID="amazon"' in os_release:
+        if 'ID="amzn"' in os_release:
             print("Amazon Linux detected. Installing CloudWatch Agent...")
             return run_command("sudo yum install -y amazon-cloudwatch-agent")
         elif 'ID=ubuntu' in os_release:
