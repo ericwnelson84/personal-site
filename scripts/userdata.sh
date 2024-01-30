@@ -16,7 +16,7 @@ aws configure set region us-east-1
 mkdir -p /var/www
 
 # update me
-git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/personal-site /var/www
+git clone https://github.com/ericwnelson84/personal-site-with-Flask.git /var/www
 
 cd /var/www
 
