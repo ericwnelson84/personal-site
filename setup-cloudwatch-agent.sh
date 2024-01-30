@@ -62,6 +62,7 @@ def create_cw_agent_config():
 # Function to start the CloudWatch Agent
 def start_cw_agent():
     print("Starting the CloudWatch Agent...")
+    print(f"config file path: {config_file_path}")
     return run_command(f"sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:{config_file_path} -s")
 
 # Main function

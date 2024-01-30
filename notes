@@ -1,6 +1,7 @@
 TODO
 - set up cloudwatch log reporting from EC2
 
+aws cloudwatch list-metrics --namespace AWS/EC2 --region us-east-1
 
 commands to intall cloudwatch agent and set up reporting to cloudwatch
 - generate config file. there is a amazon-cloudwatch-agent-config-wizard but you have to launch it from the EC2 instance
