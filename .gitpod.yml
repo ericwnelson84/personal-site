@@ -12,4 +12,5 @@ tasks:
   - name: utils
     init: |
       sudo apt-get install -y dnsutils
+      clear
 

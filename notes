@@ -3,6 +3,7 @@ TODO
 - Set up different deployment methods. Rolling etc
 
 Looks like michael hueys registart is HOSTMISSILE.COM for http://www.allstarhp.com/  or is it Wild West Domains, LLC ?
+- when we tranfer need to make sure that we have the email from the owner of the current domain to confirm
 
 git remote get-url origin
 
