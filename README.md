@@ -1,6 +1,6 @@
 # Flask Personal Site
 
-## Codepipeline with Snyk and Ghost Inspector Integration
+## Codepipeline with Snyk and Ghost Inspector Integration. Deployed using cloudformation
 
 ![Screenshot of site](assets/codepipeline.jpg)
 
