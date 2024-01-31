@@ -1,5 +1,9 @@
 # Flask Personal Site
 
+## Codepipeline with Snyk and Ghost Inspector Integration
+
+![Screenshot of site](assets/codepipeline.jpg)
+
 
 ![Screenshot of site](assets/screenshot.jpg)
 
