@@ -4,6 +4,7 @@ TODO
 
 Looks like michael hueys registart is HOSTMISSILE.COM for http://www.allstarhp.com/  or is it Wild West Domains, LLC ?
 - when we tranfer need to make sure that we have the email from the owner of the current domain to confirm, then I need a auth token to transfer it in AWS
+- need to ensure the tranfer lock is turned off
 - but I will probaby have to do that last minute so he doesnt lose his website
 
 git remote get-url origin
