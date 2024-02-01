@@ -46,42 +46,34 @@ Resources:
     Properties:
       LaunchTemplateName: Personal-Site-Template
       LaunchTemplateData:
+        IamInstanceProfile: !Ref EC2Profile
         ImageId: !Ref Image
         InstanceType: !Ref EC2InstanceType
         KeyName: !Ref KeyName
-
-  EC2Instance:
-    Type: AWS::EC2::Instance
-    Properties:
-      IamInstanceProfile: !Ref EC2Profile
-      InstanceType: !Ref EC2InstanceType
-      KeyName: !Ref KeyName
-      ImageId: !Ref Image
-      Monitoring: false
-      SubnetId: !Select [0, !Ref SubnetId]
-      SecurityGroupIds: 
-        - !GetAtt EC2SecurityGroup.GroupId
-      UserData:
-        Fn::Base64: |
-          #!/bin/bash
-          yum update -y
-          amazon-linux-extras install epel -y # this package has items for certbot used for SSL encryption. may need this command later yum install certbot python2-certbot-nginx
-          yum install nginx -y
-          yum install git -y
-          yum install gcc -y
-          yum install build-essential -y
-          yum install python3-pip python3-devel python3-setuptools -y
-          git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.helper '!aws --profile default codecommit credential-helper $@'
-          git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.UseHttpPath true
-          aws configure set region us-east-1
-          mkdir -p /var/www
-          git clone https://github.com/ericwnelson84/personal-site-with-Flask.git /var/www
-          cd /var/www
-          chmod 777 setup-cloudwatch-agent.sh
-          ./setup-cloudwatch-agent.sh
-          git config core.fileMode false
-          chmod +x scripts/post_userdata.sh
-          ./scripts/post_userdata.sh
+        SecurityGroupIds: 
+          - !GetAtt EC2SecurityGroup.GroupId
+        UserData:
+          Fn::Base64: |
+            #!/bin/bash
+            yum update -y
+            amazon-linux-extras install epel -y # this package has items for certbot used for SSL encryption. may need this command later yum install certbot python2-certbot-nginx
+            yum install nginx -y
+            yum install git -y
+            yum install gcc -y
+            yum install build-essential -y
+            yum install python3-pip python3-devel python3-setuptools -y
+            git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.helper '!aws --profile default codecommit credential-helper $@'
+            git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.UseHttpPath true
+            aws configure set region us-east-1
+            mkdir -p /var/www
+            git clone https://github.com/ericwnelson84/personal-site-with-Flask.git /var/www
+            cd /var/www
+            chmod 777 setup-cloudwatch-agent.sh
+            ./setup-cloudwatch-agent.sh
+            git config core.fileMode false
+            chmod +x scripts/post_userdata.sh
+            ./scripts/post_userdata.sh
+  
 
   ASG:
     Type: AWS::AutoScaling::AutoScalingGroup
@@ -94,7 +86,7 @@ Resources:
         - !Ref TargetGroup
       LaunchTemplate:
         LaunchTemplateId: !Ref LaunchTemplate
-        Version: !GetAtt MyLaunchTemplate.LatestVersionNumber
+        Version: !GetAtt LaunchTemplate.LatestVersionNumber
       VPCZoneIdentifier:
         - subnet-05589a844e7794bab
         - subnet-04b1163e8330b22f9
