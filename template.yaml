@@ -52,7 +52,6 @@ Parameters:
       Default: 1
 
 
-
 Resources:
 
   LaunchTemplate:
@@ -60,7 +59,10 @@ Resources:
     Properties:
       LaunchTemplateName: Personal-Site-Template
       LaunchTemplateData:
-        IamInstanceProfile: !Ref EC2Profile
+        IamInstanceProfile:
+          Arn: !GetAtt
+            - EC2Profile
+            - Arn
         ImageId: !Ref Image
         InstanceType: !Ref EC2InstanceType
         KeyName: !Ref KeyName
@@ -94,7 +96,6 @@ Resources:
       MinSize: !Ref ASGmin
       MaxSize: !Ref ASGmax
       DesiredCapacity: !Ref ASGdesire
-      LoadBalancerNames: !Ref LoadBalancer
       TargetGroupARNs:
         - !Ref TargetGroup
       LaunchTemplate:
@@ -188,14 +189,13 @@ Resources:
       Port: 80
       Protocol: HTTP
 
+
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       Port: 80
       Protocol: HTTP
       VpcId: !Ref VPCId
-      Targets:
-        - Id: !Ref EC2Instance
 
   Route53RecordSet:
     Type: AWS::Route53::RecordSet
@@ -208,9 +208,6 @@ Resources:
         HostedZoneId: !GetAtt LoadBalancer.CanonicalHostedZoneID
 
 Outputs:
-  EC2InstanceId:
-    Description: Instance Id of the new EC2 instance
-    Value: !Ref EC2Instance
   LoadBalancerDNS:
     Description: DNS name of the Load Balancer
     Value: !GetAtt LoadBalancer.DNSName
