@@ -83,6 +83,22 @@ Resources:
           chmod +x scripts/post_userdata.sh
           ./scripts/post_userdata.sh
 
+  ASG:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      MinSize: '1'
+      MaxSize: '2'
+      DesiredCapacity: '2'
+      LoadBalancerNames: !Ref LoadBalancer
+      TargetGroupARNs:
+        - !Ref TargetGroup
+      LaunchTemplate:
+        LaunchTemplateId: !Ref LaunchTemplate
+        Version: !GetAtt MyLaunchTemplate.LatestVersionNumber
+      VPCZoneIdentifier:
+        - subnet-05589a844e7794bab
+        - subnet-04b1163e8330b22f9
+
   EC2SecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -123,8 +139,6 @@ Resources:
     Properties:
       Roles:
         - !Ref EC2RoleName
-
-
 
   ALBSG:
     Type: AWS::EC2::SecurityGroup
@@ -177,8 +191,6 @@ Resources:
       VpcId: !Ref VPCId
       Targets:
         - Id: !Ref EC2Instance
-
-
 
   Route53RecordSet:
     Type: AWS::Route53::RecordSet
