@@ -38,6 +38,20 @@ Parameters:
       Type: String
       Description: The name of the existing IAM role to assign to the EC2 instance
       Default: ec2-s3-codecommit-read-only-role
+  ASGmin:
+      Type: String
+      Description: Min ASG size
+      Default: 1
+  ASGmax:
+      Type: String
+      Description: Max ASG size
+      Default: 1
+  ASGdesire:
+      Type: String
+      Description: ASG desired size
+      Default: 1
+
+
 
 Resources:
 
@@ -73,14 +87,13 @@ Resources:
             git config core.fileMode false
             chmod +x scripts/post_userdata.sh
             ./scripts/post_userdata.sh
-  
 
   ASG:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
-      MinSize: '1'
-      MaxSize: '2'
-      DesiredCapacity: '2'
+      MinSize: !Ref ASGmin
+      MaxSize: !Ref ASGmax
+      DesiredCapacity: !Ref ASGdesire
       LoadBalancerNames: !Ref LoadBalancer
       TargetGroupARNs:
         - !Ref TargetGroup
