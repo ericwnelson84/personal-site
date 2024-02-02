@@ -9,7 +9,7 @@ tmp/*
 
 venv
 *.venv
-__pycache__
+flaskapp/__pycache__
 
 .cpython
 .pyc
