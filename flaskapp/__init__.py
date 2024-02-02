@@ -28,8 +28,7 @@ except ClientError as e:
 # Decrypts secret using the associated KMS key.
 secret = json.loads(get_secret_value_response['SecretString'])
 key = secret['x-api-key']
-
-print(key)
+print("Key : " + key)
 
 app =Flask(__name__)
 
