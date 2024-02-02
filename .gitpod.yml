@@ -25,5 +25,6 @@ tasks:
       pip install -r config/requirements.txt
       export FLASK_APP=__init__.py
       export FLASK_DEBUG=1
+      cd flaskapp
       clear
 
