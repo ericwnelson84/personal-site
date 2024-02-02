@@ -15,3 +15,5 @@ flaskapp/__pycache__
 .pyc
 
 __init__.cpython-312.pyc
+
+__pycache__
