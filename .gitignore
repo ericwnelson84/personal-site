@@ -7,3 +7,5 @@ build.toml
 packaged.yaml
 tmp/*
 
+venv
+*.venv
