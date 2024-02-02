@@ -17,8 +17,8 @@ tasks:
   - name: python
     init: |
       sudo apt update
-      sudo apt install python3
-      sudo apt install python3-venv
+      sudo apt install -y python3
+      sudo apt install -y python3-venv
       sudo apt install -y build-essential libssl-dev libffi-dev python3-dev
       python3 -m venv venv
       . venv/bin/activate
