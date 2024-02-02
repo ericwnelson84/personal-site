@@ -4,9 +4,6 @@ import json
 import boto3
 from botocore.exceptions import ClientError
 
-
-
-
 secret_name = "news-api-key"
 region_name = "us-east-1"
 # Create a Secrets Manager client
@@ -29,11 +26,16 @@ except ClientError as e:
 secret = json.loads(get_secret_value_response['SecretString'])
 key = secret['x-api-key']
 
+ec2 = boto3.resource('ec2', region_name='us-east-1')
+instance = ec2.Instance('instance_id')
+print(f"instance id: {instance}")
+
+
 app =Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', instance=instance)
 
 @app.route("/news", methods=["GET", "POST"])
 def news():
