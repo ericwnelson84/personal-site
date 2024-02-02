@@ -21,7 +21,7 @@ git clone https://github.com/ericwnelson84/personal-site-with-Flask.git /var/www
 
 cd /var/www
 
-# Run cloudwatch script here. be sure to give full permissions
+# Run cloudwatch script here. be sure to give permissions
 chmod 777 setup-cloudwatch-agent.sh
 ./setup-cloudwatch-agent.sh
 
