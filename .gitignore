@@ -9,5 +9,9 @@ tmp/*
 
 venv
 *.venv
+__pycache__
 
-pycache
+.cpython
+.pyc
+
+__init__.cpython-312.pyc
