@@ -9,6 +9,6 @@ Werkzeug==2.2.3
 WTForms==3.0.1
 SQLAlchemy==2.0.19
 psycopg2-binary==2.9.6
-uwsgi==2.0.18
+uwsgi==2.0.22
 requests==2.26.0
 boto3
