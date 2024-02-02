@@ -28,14 +28,15 @@ key = secret['x-api-key']
 
 ec2 = boto3.resource('ec2', region_name='us-east-1')
 instance = ec2.Instance('instance_id')
-print(f"instance id: {instance}")
+instance_id = f"instance id: {instance}"
+print(instance_id)
 
 
 app =Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('index.html', instance=instance)
+    return render_template('index.html', instance_id=instance_id)
 
 @app.route("/news", methods=["GET", "POST"])
 def news():
