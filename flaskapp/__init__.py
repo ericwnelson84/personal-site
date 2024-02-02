@@ -26,11 +26,8 @@ except ClientError as e:
 secret = json.loads(get_secret_value_response['SecretString'])
 key = secret['x-api-key']
 
-ec2 = boto3.resource('ec2', region_name='us-east-1')
-instance = ec2.Instance('instance_id')
-instance_id = f"instance id: {instance}"
-print(instance_id)
-
+response = requests.get('http://169.254.169.254/latest/meta-data/instance-id')
+instance_id = response.text
 
 app =Flask(__name__)
 
