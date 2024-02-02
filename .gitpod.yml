@@ -12,5 +12,11 @@ tasks:
   - name: utils
     init: |
       sudo apt-get install -y dnsutils
+      pip
       clear
+  - name: python-venv
+    init: |
+      python3 -m venv venv
+      . venv/bin/activate
+      pip install -r config/requirements.txt 
 
