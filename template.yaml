@@ -41,15 +41,15 @@ Parameters:
   ASGmin:
       Type: String
       Description: Min ASG size
-      Default: 2
+      Default: 1
   ASGmax:
       Type: String
       Description: Max ASG size
-      Default: 2
+      Default: 1
   ASGdesire:
       Type: String
       Description: ASG desired size
-      Default: 2
+      Default: 1
 
 
 Resources:
