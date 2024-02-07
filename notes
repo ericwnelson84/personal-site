@@ -1,4 +1,6 @@
 TODO
+- set up template and instance with cfn helper script cfn-init and cfn-hup so I can update the metadata (user data) without having to restart the instance. I need the cfn hup config file
+and need to update the template format to have meta-data. Need to look at examples in my notes
 - set up cloudwatch log reporting from EC2
 - Set up different deployment methods. Rolling etc
 - Find python code from my 100 days of python projects webdriver with selenium its called where you use the xpath to click buttons on webpages. The GHost inspector is too expensive. Need to write a lambda function
