@@ -77,7 +77,7 @@ Resources:
             06_command:
               command: "yum install python3-pip python3-devel python3-setuptools -y"
             07_command:
-              command: "sudo yum install python-pip"
+              command: "sudo yum install python-pip -y"
             08_command:
               command: "git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.helper '!aws --profile default codecommit credential-helper $@'"
             09_command:
