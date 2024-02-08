@@ -67,7 +67,7 @@ Resources:
             01_command:
               command: "yum update -y"
             02_command:
-              command: "clear"
+              command: ""
             03_comman:
               command: "yum install nginx -y"
             04_command:
@@ -75,7 +75,7 @@ Resources:
             05_command:
               command: "yum install gcc -y"
             06_command:
-              command: "clear"
+              command: ""
             07_command:
               command: "yum install python3-pip python3-devel python3-setuptools -y"
             08_command:
