@@ -63,6 +63,10 @@ Resources:
     Metadata:
       AWS::CloudFormation::Init:
         config:
+          files:
+            /var/www/setup-cloudwatch-agent.sh:
+            /var/www//scripts/post_userdata.sh:
+
           commands:
             01_command:
               command: "yum update -y"
@@ -93,13 +97,13 @@ Resources:
             14_command:
               command: "chmod 777 setup-cloudwatch-agent.sh"
             15_command:
-              command: "/setup-cloudwatch-agent.sh"
+              command: "./var/www/setup-cloudwatch-agent.sh"
             16_command:
               command: "git config core.fileMode false"
             17_command:
               command: "chmod +x scripts/post_userdata.sh"
             18_command:
-              command: "/scripts/post_userdata.sh"
+              command: "./var/www/scripts/post_userdata.sh"
     Properties:
       LaunchTemplateName: Personal-Site-Template
       LaunchTemplateData:
