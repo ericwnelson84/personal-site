@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: CloudFormation template to deploy an EC2 instance behind an ALB with SSL, Route 53, and CodeCommit integration.
+Description: CloudFormation template to deploy an EC2 instance behind an ALB with SSL, Route 53, and github integration.
 
 Parameters:
   VPCId:
@@ -51,9 +51,7 @@ Parameters:
       Description: ASG desired size
       Default: 1
 
-
 Resources:
-
   LaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Metadata:
@@ -116,8 +114,8 @@ Resources:
           Fn::Base64: |
             #!/bin/bash -xe
             yum install -y aws-cfn-bootstrap
-            /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MyInstance --region ${AWS::Region}
-            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MyInstance --region ${AWS::Region}
+            /opt/aws/bin/cfn-init -v --stack personal-site --resource MyInstance --region us-east-1
+            /opt/aws/bin/cfn-signal -e $? --stack personal-site --resource MyInstance --region us-east-1
 
   ASG:
     Type: AWS::AutoScaling::AutoScalingGroup
