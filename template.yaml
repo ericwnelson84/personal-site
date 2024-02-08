@@ -54,6 +54,9 @@ Parameters:
 Resources:
   LaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT5M # Waits up to 5 minutes for the signal
     Metadata:
       AWS::CloudFormation::Init:
         config:
@@ -94,11 +97,7 @@ Resources:
               command: "chmod +x scripts/post_userdata.sh"
             18_command:
               command: "./scripts/post_userdata.sh"
-
     Properties:
-    CreationPolicy:
-      ResourceSignal:
-        Timeout: PT5M # Waits up to 5 minutes for the signal
       LaunchTemplateName: Personal-Site-Template
       LaunchTemplateData:
         IamInstanceProfile:
