@@ -1,15 +1,15 @@
 Flask
-Bootstrap_Flask==2.2.0
-Flask_CKEditor==0.4.6
+Bootstrap_Flask
+Flask_CKEditor
 Flask_Login
-Flask-Gravatar==0.5.0
-flask_sqlalchemy==3.0.5
-Flask_WTF==1.1.1
-Werkzeug==2.2.3
-WTForms==3.0.1
-SQLAlchemy==2.0.19
-psycopg2-binary==2.9.6
+Flask-Gravatar
+flask_sqlalchemy
+Flask_WTF
+Werkzeug
+WTForms
+SQLAlchemy
+psycopg2-binary
 # uwsgi==2.0.18
 uwsgi
-requests==2.26.0
+requests
 boto3
