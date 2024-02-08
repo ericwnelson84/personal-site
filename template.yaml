@@ -114,7 +114,7 @@ Resources:
           - !GetAtt EC2SecurityGroup.GroupId
         UserData:
           Fn::Base64: |
-            #!/bin/bash -xe
+            #!/bin/bash
             yum install -y aws-cfn-bootstrap
             /opt/aws/bin/cfn-init -v --stack personal-site --resource LaunchTemplate --region us-east-1
             /opt/aws/bin/cfn-signal -e $? --stack personal-site --resource LaunchTemplate --region us-east-1
