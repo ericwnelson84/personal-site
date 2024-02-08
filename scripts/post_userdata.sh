@@ -2,7 +2,7 @@
 
 python3 -m venv venv
 . venv/bin/activate
-pip install -r config/requirements.txt
+pip install -r /var/www/config/requirements.txt
 
 chown -R ec2-user:nginx /var/www
 
