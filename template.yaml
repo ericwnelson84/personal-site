@@ -113,7 +113,7 @@ Resources:
           Fn::Base64: |
             #!/bin/bash -xe
             yum install -y aws-cfn-bootstrap
-            /opt/aws/bin/cfn-init -v --stack personal-site --resource MyInstance --region us-east-1
+            /opt/aws/bin/cfn-init -v --stack personal-site --resource ASG --region us-east-1
             /opt/aws/bin/cfn-signal -e $? --stack personal-site --resource MyInstance --region us-east-1
 
   ASG:
