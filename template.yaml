@@ -67,7 +67,7 @@ Resources:
             01_command:
               command: "yum update -y"
             02_command:
-              command: ""
+              command: "amazon-linux-extras install epel"
             03_comman:
               command: "yum install nginx -y"
             04_command:
