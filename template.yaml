@@ -63,10 +63,6 @@ Resources:
     Metadata:
       AWS::CloudFormation::Init:
         config:
-          files:
-            /var/www/setup-cloudwatch-agent.sh:
-            /var/www//scripts/post_userdata.sh:
-
           commands:
             01_command:
               command: "yum update -y"
