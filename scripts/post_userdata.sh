@@ -7,11 +7,11 @@ pip install -r /var/www/config/requirements.txt
 chown -R ec2-user:nginx /var/www
 
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf-orig
-cp config/nginx.conf /etc/nginx/nginx.conf
+cp /var/www/config/nginx.conf /etc/nginx/nginx.conf
 
-cp config/flaskapp.conf /etc/nginx/conf.d/flaskapp.conf
+cp /var/www/config/flaskapp.conf /etc/nginx/conf.d/flaskapp.conf
 
-cp config/flaskapp.service /etc/systemd/system/flaskapp.service
+cp /var/www/config/flaskapp.service /etc/systemd/system/flaskapp.service
 
 mkdir /var/log/uwsgi
 chown -R ec2-user:nginx /var/log/uwsgi
