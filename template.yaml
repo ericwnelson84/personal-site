@@ -100,6 +100,9 @@ Resources:
               command: "chmod +x /var/www/scripts/post_userdata.sh"
             18_command:
               command: "./var/www/scripts/post_userdata.sh"
+            19_command:
+              command: 'echo "ALL DONE ###########################"'
+              
     Properties:
       LaunchTemplateName: Personal-Site-Template
       LaunchTemplateData:
