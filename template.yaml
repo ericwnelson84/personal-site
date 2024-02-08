@@ -97,8 +97,10 @@ Resources:
             18_command:
               command: "./scripts/post_userdata.sh"
 
-
     Properties:
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT5M # Waits up to 5 minutes for the signal
       LaunchTemplateName: Personal-Site-Template
       LaunchTemplateData:
         IamInstanceProfile:
@@ -136,7 +138,7 @@ Resources:
         MinInstancesInService: "1"
         MaxBatchSize: "1"
         PauseTime: "PT5M"
-        WaitOnResourceSignals: false
+        WaitOnResourceSignals: True
 
   EC2SecurityGroup:
     Type: AWS::EC2::SecurityGroup
