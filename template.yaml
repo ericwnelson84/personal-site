@@ -93,13 +93,13 @@ Resources:
             14_command:
               command: "chmod 777 setup-cloudwatch-agent.sh"
             15_command:
-              command: "./setup-cloudwatch-agent.sh"
+              command: "/setup-cloudwatch-agent.sh"
             16_command:
               command: "git config core.fileMode false"
             17_command:
               command: "chmod +x scripts/post_userdata.sh"
             18_command:
-              command: "./scripts/post_userdata.sh"
+              command: "/scripts/post_userdata.sh"
     Properties:
       LaunchTemplateName: Personal-Site-Template
       LaunchTemplateData:
