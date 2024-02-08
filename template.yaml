@@ -91,13 +91,13 @@ Resources:
             13_command:
               command: "cd /var/www"
             14_command:
-              command: "chmod 777 setup-cloudwatch-agent.sh"
+              command: "chmod 777 /var/www/setup-cloudwatch-agent.sh"
             15_command:
               command: "./var/www/setup-cloudwatch-agent.sh"
             16_command:
               command: "git config core.fileMode false"
             17_command:
-              command: "chmod +x scripts/post_userdata.sh"
+              command: "chmod +x /var/www/scripts/post_userdata.sh"
             18_command:
               command: "./var/www/scripts/post_userdata.sh"
     Properties:
