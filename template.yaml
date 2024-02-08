@@ -95,7 +95,7 @@ Resources:
             15_command:
               command: "./var/www/setup-cloudwatch-agent.sh"
             16_command:
-              command: "git config core.fileMode false"
+              command: ""
             17_command:
               command: "chmod +x /var/www/scripts/post_userdata.sh"
             18_command:
