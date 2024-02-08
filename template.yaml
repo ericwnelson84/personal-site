@@ -97,12 +97,36 @@ Resources:
             16_command:
               command: ""
             17_command:
-              command: "chmod +x /var/www/scripts/post_userdata.sh"
+              command: "python3 -m venv venv"
             18_command:
-              command: "./var/www/scripts/post_userdata.sh"
+              command: ". venv/bin/activate"
             19_command:
-              command: 'echo "ALL DONE ###########################"'
-              
+              command: "pip install -r /var/www/config/requirements.txt"
+            20_command:
+              command: "chown -R ec2-user:nginx /var/www"
+            21_command:
+              command: "mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf-orig"
+            22_command:
+              command: "cp /var/www/config/nginx.conf /etc/nginx/nginx.conf"
+            23_command:
+              command: "cp /var/www/config/flaskapp.conf /etc/nginx/conf.d/flaskapp.conf"
+            24_command:
+              command: "cp /var/www/config/flaskapp.service /etc/systemd/system/flaskapp.service"
+            25_command:
+              command: "mkdir /var/log/uwsgi"
+            26_command:
+              command: "chown -R ec2-user:nginx /var/log/uwsgi"
+            27_command:
+              command: "systemctl start flaskapp.service"
+            28_command:
+              command: "systemctl enable flaskapp.service"
+            29_command:
+              command: "systemctl restart nginx"
+            30_command:
+              command: "systemctl enable nginx"
+            31_command:
+              command: "echo 'Install complete'"
+
     Properties:
       LaunchTemplateName: Personal-Site-Template
       LaunchTemplateData:
