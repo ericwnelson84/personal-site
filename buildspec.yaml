@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - echo Installing source dependencies...
+      - npm install
+  pre_build:
+    commands:
+      - echo Running tests...
+      - npm test
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the application...
+      - npm run build
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Deploying application...
+      # Add your deployment command here. This might involve copying
+      # artifacts to an S3 bucket, registering a new application revision
+      # in AWS CodeDeploy, or triggering a custom script to update your ASG.
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'build' # or whatever directory your build artifacts are in
