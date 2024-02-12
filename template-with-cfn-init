@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template with cfn-init.
+
+Resources:
+  MyInstance:
+    Type: 'AWS::EC2::Instance'
+    Metadata:
+      AWS::CloudFormation::Init:
+        config:
+          packages:
+            yum:
+              git: []
+              nginx: []
+              gcc: []
+              python3-pip: []
+              python3-devel: []
+              python3-setuptools: []
+              epel-release: []
+          commands:
+            01_install_aws_codeartifact:
+              command: !Sub >
+                aws codeartifact login --tool pip --repository python --domain mydomain --domain-owner 123456789012 --region ${AWS::Region}
+            02_configure_aws:
+              command: /usr/local/bin/aws configure set region us-east-1
+            03_clone_repository:
+              command: !Sub >
+                git clone https://github.com/myrepository/myapp.git /var/www
+            04_setup_cloudwatch:
+              command: !Sub >
+                chmod +x /var/www/setup-cloudwatch-agent.sh && /var/www/setup-cloudwatch-agent.sh
+            05_copy_env_file_from_s3:
+              command: !Sub >
+                aws s3 cp s3://mybucket/myapp/.env /var/www/myapp/.env
+          files:
+            /var/www/config/requirements.txt:
+              content: |
+                # Add your Python package requirements here
+            /etc/nginx/nginx.conf:
+              source: !Sub >
+                https://s3.amazonaws.com/mybucket/nginx.conf
+            /etc/systemd/system/myapp.service:
+              source: !Sub >
+                https://s3.amazonaws.com/mybucket/myapp.service
+          services:
+            sysvinit:
+              nginx:
+                enabled: 'true'
+                ensureRunning: 'true'
+              myapp:
+                enabled: 'true'
+                ensureRunning: 'true'
+                files: ['/var/www/myapp']
+    Properties:
+      # Instance properties like ImageId, InstanceType, KeyName, etc.
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          /usr/local/bin/cfn-init -v --stack ${AWS::StackName} --resource MyInstance --configsets InstallAndRun --region ${AWS::Region}
+          /usr/local/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MyInstance --region ${AWS::Region}
