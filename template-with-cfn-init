@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: CloudFormation template with cfn-init.
+Description: CloudFormation template with cfn-init that references config files in a GitHub repository.
 
 Resources:
   MyInstance:
@@ -27,20 +27,17 @@ Resources:
                 git clone https://github.com/myrepository/myapp.git /var/www
             04_setup_cloudwatch:
               command: !Sub >
-                chmod +x /var/www/setup-cloudwatch-agent.sh && /var/www/setup-cloudwatch-agent.sh
-            05_copy_env_file_from_s3:
+                chmod +x /var/www/myapp/setup-cloudwatch-agent.sh && /var/www/myapp/setup-cloudwatch-agent.sh
+            05_copy_env_file:
               command: !Sub >
-                aws s3 cp s3://mybucket/myapp/.env /var/www/myapp/.env
+                cp /var/www/myapp/simple-flask/.env /var/www/myapp/.env
           files:
-            /var/www/config/requirements.txt:
-              content: |
-                # Add your Python package requirements here
             /etc/nginx/nginx.conf:
               source: !Sub >
-                https://s3.amazonaws.com/mybucket/nginx.conf
+                file:///var/www/myapp/config/nginx.conf
             /etc/systemd/system/myapp.service:
               source: !Sub >
-                https://s3.amazonaws.com/mybucket/myapp.service
+                file:///var/www/myapp/config/flaskapp.service
           services:
             sysvinit:
               nginx:
@@ -55,5 +52,5 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          /usr/local/bin/cfn-init -v --stack ${AWS::StackName} --resource MyInstance --configsets InstallAndRun --region ${AWS::Region}
+          /usr/local/bin/cfn-init -v --stack ${AWS::StackName} --resource MyInstance --configsets config --region ${AWS::Region}
           /usr/local/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MyInstance --region ${AWS::Region}
