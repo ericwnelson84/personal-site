@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: CloudFormation template to deploy an EC2 instance behind an ALB with SSL, Route 53, and CodeCommit integration.
+Description: CloudFormation template to deploy an EC2 instance behind an ALB with SSL, Route 53, and github integration.
 
 Parameters:
   VPCId:
@@ -51,11 +51,82 @@ Parameters:
       Description: ASG desired size
       Default: 1
 
-
 Resources:
-
   LaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT5M # Waits up to 5 minutes for the signal
+    UpdatePolicy:
+      ResourceSignal:
+        Timeout: PT5M # Waits up to 5 minutes for the signal
+    Metadata:
+      AWS::CloudFormation::Init:
+        config:
+          commands:
+            01_command:
+              command: "yum update -y"
+            02_command:
+              command: "amazon-linux-extras install epel"
+            03_comman:
+              command: "yum install nginx -y"
+            04_command:
+              command: "yum install git -y"
+            05_command:
+              command: "yum install gcc -y"
+            06_command:
+              command: "yum install python3-pip python3-devel python3-setuptools -y"
+            07_command:
+              command: "sudo yum install python-pip -y"
+            08_command:
+              command: "git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.helper '!aws --profile default codecommit credential-helper $@'"
+            09_command:
+              command: "git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.UseHttpPath true"
+            10_command:
+              command: "aws configure set region us-east-1"
+            11_command:
+              command: "mkdir -p /var/www"
+            12_command:
+              command: "git clone https://github.com/ericwnelson84/personal-site-with-Flask.git /var/www"
+            13_command:
+              command: "cd /var/www"
+            14_command:
+              command: "chmod 777 /var/www/setup-cloudwatch-agent.sh"
+            15_command:
+              command: "./var/www/setup-cloudwatch-agent.sh"
+            16_command:
+              command: ""
+            17_command:
+              command: "python3 -m venv venv"
+            18_command:
+              command: ". venv/bin/activate"
+            19_command:
+              command: "pip install -r /var/www/config/requirements.txt"
+            20_command:
+              command: "chown -R ec2-user:nginx /var/www"
+            21_command:
+              command: "mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf-orig"
+            22_command:
+              command: "cp /var/www/config/nginx.conf /etc/nginx/nginx.conf"
+            23_command:
+              command: "cp /var/www/config/flaskapp.conf /etc/nginx/conf.d/flaskapp.conf"
+            24_command:
+              command: "cp /var/www/config/flaskapp.service /etc/systemd/system/flaskapp.service"
+            25_command:
+              command: "mkdir /var/log/uwsgi"
+            26_command:
+              command: "chown -R ec2-user:nginx /var/log/uwsgi"
+            27_command:
+              command: "systemctl start flaskapp.service"
+            28_command:
+              command: "systemctl enable flaskapp.service"
+            29_command:
+              command: "systemctl restart nginx"
+            30_command:
+              command: "systemctl enable nginx"
+            31_command:
+              command: "echo 'Install complete'"
+
     Properties:
       LaunchTemplateName: Personal-Site-Template
       LaunchTemplateData:
@@ -71,25 +142,9 @@ Resources:
         UserData:
           Fn::Base64: |
             #!/bin/bash
-            yum update -y
-            amazon-linux-extras install epel -y # this package has items for certbot used for SSL encryption. may need this command later yum install certbot python2-certbot-nginx
-            aws codeartifact login --tool pip --repository python --domain codeartifact-package-repo --domain-owner 088478797243 --region us-east-1
-            yum install nginx -y
-            yum install git -y
-            yum install gcc -y
-            yum install build-essential -y
-            yum install python3-pip python3-devel python3-setuptools -y
-            git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.helper '!aws --profile default codecommit credential-helper $@'
-            git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.UseHttpPath true
-            aws configure set region us-east-1
-            mkdir -p /var/www
-            git clone https://github.com/ericwnelson84/personal-site-with-Flask.git /var/www
-            cd /var/www
-            chmod 777 setup-cloudwatch-agent.sh
-            ./setup-cloudwatch-agent.sh
-            git config core.fileMode false
-            chmod +x scripts/post_userdata.sh
-            ./scripts/post_userdata.sh
+            yum install -y aws-cfn-bootstrap
+            /opt/aws/bin/cfn-init -v --stack personal-site --resource LaunchTemplate --region us-east-1
+            /opt/aws/bin/cfn-signal -e $? --stack personal-site --resource LaunchTemplate --region us-east-1
 
   ASG:
     Type: AWS::AutoScaling::AutoScalingGroup
@@ -105,6 +160,12 @@ Resources:
       VPCZoneIdentifier:
         - subnet-05589a844e7794bab
         - subnet-04b1163e8330b22f9
+    UpdatePolicy:
+      AutoScalingRollingUpdate:
+        MinInstancesInService: "1"
+        MaxBatchSize: "1"
+        PauseTime: "PT5M"
+        WaitOnResourceSignals: True
 
   EC2SecurityGroup:
     Type: AWS::EC2::SecurityGroup
