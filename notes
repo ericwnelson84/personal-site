@@ -4,7 +4,7 @@ and need to update the template format to have meta-data. Need to look at exampl
 - set up cloudwatch log reporting from EC2
 - Set up different deployment methods. Rolling etc
 - Find python code from my 100 days of python projects webdriver with selenium its called where you use the xpath to click buttons on webpages. The GHost inspector is too expensive. Need to write a lambda function
-
+- set up health check reporting from App path /health-check return 200. Need to change ASG health check from EC2 status to ELB. Also need to check the TG health check path
 
 Looks like michael hueys registar is HOSTMISSILE.COM for http://www.allstarhp.com/  or is it Wild West Domains, LLC ?
 - when we tranfer need to make sure that we have the email from the owner of the current domain to confirm, then I need a auth token to transfer it in AWS
