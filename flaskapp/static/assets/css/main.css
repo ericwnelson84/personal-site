@@ -39,6 +39,11 @@ img.responsive {
   }
   
 
+.linkedin-logo img {
+width: 32px; /* or any size you prefer */
+height: auto;
+}
+
 body {
 	line-height: 1;
 }
