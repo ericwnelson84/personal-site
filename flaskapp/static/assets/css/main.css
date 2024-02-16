@@ -42,6 +42,7 @@ img.responsive {
 .linkedin-logo img {
 width: 32px; /* or any size you prefer */
 height: auto;
+background-color: rgba(0,0,0,0.0)
 }
 
 body {
