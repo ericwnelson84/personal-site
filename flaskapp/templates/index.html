@@ -26,10 +26,10 @@
 				<nav id="nav">
 					<ul>
 						<li><a href="#one" class="active">About me</a></li>
-						<li><a href="#two" class="active">Experience</a></li>
-						<li><a href="#three" class="active">Certifications</a></li>
-						<li><a href="#four" class="active">Education</a></li>
-						<li><a href="#five" class="active">Contact</a></li>
+						<li><a href="#two">Experience</a></li>
+						<li><a href="#three">Certifications</a></li>
+						<li><a href="#four">Education</a></li>
+						<li><a href="#five">Contact</a></li>
 					</ul>
 				</nav>
 				<footer>
@@ -56,27 +56,31 @@
 								<header class="major">
 									<h2>About me</h2>
 								</header>
-								<h3>Prior Semiconductor Equipment and Process Engineer and Air Force Development Engineer transitioning into Cloud Engineering</h4>
-									<a href="{{url_for('news') }}">Current News Sentiment</a>
-
-								<h4><a href="https://docs.google.com/document/d/1uqgxtf4UNDIuA6Jm8NXjgaUh7Wie0mEY/edit?usp=sharing&ouid=104861898024257280897&rtpof=true&sd=true">Resume</a><h3>
+								<h4>Prior Semiconductor Equipment and Process Engineer and Air Force Development Engineer transitioning into Cloud Engineering</h4>
+								<h4 style="color: #4acaa8;"><a href="https://drive.google.com/file/d/1VnGVNqNHb5lxjVzHJXhtcgMQewSBGiug/view?usp=sharing">Resume</a><h4>
 
 							</div>
 						</section>
 
 						<section id="two">
 							<div class="container">
-								<h3>Experience</h3>
-
-								<h4><a href="https://cruddur.info/">Cruddur Social App</a><h4>
+								<header class="major">
+								<h2>Experience</h2>
+								</header>
+								<p>Created Social App Cruddur.info</p>
+								<p>- Deployed with Codepipeline/CodeBuild/CodeDeploy and Cloudformation. React frontend deployed on S3 via Cloudfront. Flask backend deployed on Fargate using Docker containers using custom VPC</p>
+								<p>- Infrastructure as code. Every layer from the VPC to the ECS service deployed using cloudformation</p>
+								<p>- Experience troubleshooting app/deployment errors and tracing the failure with log statements, browser DevTools, cloudwatch logs, Cloudtrail API calls (cloudformation)</p>
+								<p>Please see resume for additional experience</p>
+								<h4 style="color: #4acaa8;"><a href="https://cruddur.info/">Cruddur Social App</a><h4>
 								<span><img src="static/images/cruddur-screenshot.jpg" alt="" class="responsive" /></span>
 								<span><img src="static/images/cruddur-architecture.jpg" alt="" class="responsive" /></span>
 
-								<h4><a href="https://blog.ericwnelson.info/">Flask Blog App</a><h4>
+								<h4 style="color: #4acaa8;"><a href="https://blog.ericwnelson.info/">Flask Blog App</a><h4>
 								
 								<span><img src="static/images/blog-diagram.jpg" alt="" class="responsive"/></span>
 
-								<h4><a href="{{ url_for('news') }}">News Sentiment API</a><h4></h4>
+								<h4 style="color: #4acaa8;"><a href="{{ url_for('news') }}">News Sentiment API</a><h4></h4>
 								<span><img src="static/images/news-sentiment.jpg" alt="" class="responsive"/></span>
 								<span><img src="static/images/news-api-diagram.jpg" alt="" class="responsive"/></span>
 
@@ -87,27 +91,33 @@
 						<section id="three">
 							<div class="container">
 
+								<header class="major">
 									<h2>Certifications</h2>
+								</header>
+								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="6fc75d87-543a-49f5-a235-64eb539aac29" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="0324fe93-626e-4ffa-94f2-8ede8d902bb1" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="fce215b3-c572-407f-934d-385d4fb51c6a" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="811db925-643c-4991-ab10-33a84c550ea8" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="4ff2f707-5098-4cb0-b965-157a5ca9c6b3" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="ffe2001a-774d-4523-8003-400143f4e70f" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="4f87c0ef-7dae-4f97-ae7b-99fe729bd928" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="67fc6993-fbae-4cff-859a-f78e784865d3" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="d730a26a-7e2b-4097-ad32-2376aa96f98e" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="c9ed7e80-0be8-471b-9919-590bfdb28be6" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="c9627f46-268a-4cf7-b0ff-4c783ea69e1b" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+								<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="4f87c0ef-7dae-4f97-ae7b-99fe729bd928" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 							</div>
 						</section>
 
 						
 						<section id="four">
 							<div class="container">
-								<h3>Education</h3>
+								<header class="major">
+									<h2>Education</h2>
+								</header>
 								<ul class="feature-icons">
-									<li class="icon solid fa-book">BS Aerospace Engineering, University of Texas at Austin | 2007 | </li>
+									<li class="icon solid fa-book">Post-Graduate Program in Cloud Computing , University of Texas at Austin | In progress | </li>
 									<li class="icon solid fa-book">MS Spacecraft Systems Engineering, Air Force Institute of Technology | 2011 | </li>
+									<li class="icon solid fa-book">BS Aerospace Engineering, University of Texas at Austin | 2007 | </li>
 									<li class="icon solid fa-book">Certificate in Hands-on Nanotechnologies: University of Texas at Austin | 2019 |</li>
 
 								</ul>
@@ -116,7 +126,9 @@
 						
 							<section id="five">
 								<div class="container">
-									<h3>Contact Me</h3>
+									<header class="major">
+										<h2>Contact Me</h2>
+									</header>
 									<p>ericwnelson84@gmail.com</p>
 								</div>
 							</section>
