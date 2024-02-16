@@ -34,7 +34,7 @@ app =Flask(__name__)
 @app.route('/')
 def home():
     # return render_template('index.html', instance_id=instance_id)
-    return render_template('index.html')
+    return render_template('index.html', instance_id=instance_id)
 
 @app.route("/news", methods=["GET", "POST"])
 def news():
