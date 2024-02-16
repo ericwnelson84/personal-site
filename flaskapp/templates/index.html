@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Eric Nelsononis</title>
+		<title>Eric Nelsonon</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="static/assets/css/main.css" />
@@ -21,14 +21,15 @@
 				<header>
 					<span class="image avatar"><img src="static/images/avatar.jpg" alt="" /></span>
 					<h1 id="logo"><a href="#">Eric Nelson</a></h1>
-					<p>Python AWS Developer</p>
+					<p>Cloud Engineer</p>
 				</header>
 				<nav id="nav">
 					<ul>
 						<li><a href="#one" class="active">About me</a></li>
-						<li><a href="#two">Certifications</a></li>
-						<li><a href="#three">Education</a></li>
-						<li><a href="#four">Contact</a></li>
+						<li><a href="#two" class="active">Experience</a></li>
+						<li><a href="#three">Certifications</a></li>
+						<li><a href="#four">Education</a></li>
+						<li><a href="#five">Contact</a></li>
 					</ul>
 				</nav>
 				<footer>
@@ -45,7 +46,6 @@
 				<!-- Main -->
 					<div id="main">
 
-						<!-- One -->
 						<section id="one">
 							<div class="image main" data-position="center">
 								<img src="static/images/banner.jpg" alt="" />
@@ -56,20 +56,33 @@
 								<header class="major">
 									<h2>About me</h2>
 								</header>
-								<h3>Prior Semiconductor Equipment and Process Engineer and Air Force transitioning into Cloud Engineering</h4>
+								<h3>Prior Semiconductor Equipment and Process Engineer and Air Force Development Engineer transitioning into Cloud Engineering</h4>
 									<a href="{{url_for('news') }}">Current News Sentiment</a>
 
 								<h4><a href="https://docs.google.com/document/d/1uqgxtf4UNDIuA6Jm8NXjgaUh7Wie0mEY/edit?usp=sharing&ouid=104861898024257280897&rtpof=true&sd=true">Resume</a><h3>
-								<h4><a href="https://blog.ericwnelson.info/">Flask Blog App Demo</a><h4>
-								<span><img src="static/images/blog-diagram.jpg" alt="" /></span>
-								<h4><a href="{{ url_for('news') }}">News Sentiment API Demo</a><h4></h4>
-								<span><img src="static/images/news-api-diagram.jpg" alt="" /></span>
+
 							</div>
 						</section>
 
-
-						<!-- Two -->
 						<section id="two">
+							<div class="container">
+								<h3>Experience</h3>
+
+								<h4><a href="https://cruddur.info/">Cruddur Social App</a><h4>
+								<span><img src="static/images/cruddur-screenshot.jpg" alt="" class="responsive" /></span>
+								<span><img src="static/images/cruddur-architecture.jpg" alt="" class="responsive" /></span>
+
+								<h4><a href="https://blog.ericwnelson.info/">Flask Blog App Demo</a><h4>
+								<span><img src="static/images/blog-diagram.jpg" alt="" class="responsive"/></span>
+
+								<h4><a href="{{ url_for('news') }}">News Sentiment API Demo</a><h4></h4>
+								<span><img src="static/images/news-api-diagram.jpg" alt="" class="responsive"/></span>
+
+								</ul>
+							</div>
+						</section>
+					
+						<section id="three">
 							<div class="container">
 
 									<h2>Certifications</h2>
@@ -86,8 +99,8 @@
 							</div>
 						</section>
 
-						<!-- Three -->
-						<section id="three">
+						
+						<section id="four">
 							<div class="container">
 								<h3>Education</h3>
 								<ul class="feature-icons">
@@ -98,8 +111,8 @@
 								</ul>
 							</div>
 						</section>
-						<!-- Four -->
-							<section id="four">
+						
+							<section id="five">
 								<div class="container">
 									<h3>Contact Me</h3>
 									<p>ericwnelson84@gmail.com</p>

@@ -29,6 +29,16 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;}
 
+/* CSS to make the image responsive and fit the webpage */
+img.responsive {
+	max-width: 100%; /* Make image width not exceed the container width */
+	height: auto; /* Adjust height automatically to maintain aspect ratio */
+	display: block; /* Display block to remove any unwanted space below the image */
+	margin-left: auto; /* Center the image horizontally */
+	margin-right: auto; /* Center the image horizontally */
+  }
+  
+
 body {
 	line-height: 1;
 }
