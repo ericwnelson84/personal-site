@@ -6,6 +6,7 @@ and need to update the template format to have meta-data. Need to look at exampl
 - Find python code from my 100 days of python projects webdriver with selenium its called where you use the xpath to click buttons on webpages. The GHost inspector is too expensive. Need to write a lambda function
 - set up health check reporting from App path /health-check return 200. Need to change ASG health check from EC2 status to ELB. Also need to check the TG health check path
 
+258b53a4e3cd7fe8fd6324448721b8354d75cabe commit hash with template with user data that works
 
 git remote get-url origin
 
