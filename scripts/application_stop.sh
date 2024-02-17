@@ -1,3 +1,3 @@
 #!/bin/bash
-# Stop the web server
-systemctl stop httpd
+
+echo "before stop checks complete"

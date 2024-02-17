@@ -1,3 +1,3 @@
 #!/bin/bash
-# Start the web server
-systemctl start httpd
+
+echo "application start checks complete"

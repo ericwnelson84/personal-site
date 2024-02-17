@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# Example validation script that checks if a web service is running
-# Replace http://your-service-url with your actual service URL
-
-if curl -f http://your-service-url; then
+if curl -f https://ericwnelson.info/health-check; then
     echo "Service validation succeeded."
     exit 0
 else
