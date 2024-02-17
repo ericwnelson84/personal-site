@@ -70,6 +70,12 @@ Resources:
           Fn::Base64: |
             #!/bin/bash
             yum update -y
+            sudo yum install ruby -y
+            sudo yum install wget -y
+            cd /home/ec2-user
+            chmod +x ./install
+            sudo ./install auto
+            wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install
             amazon-linux-extras install epel -y # this package has items for certbot used for SSL encryption. may need this command later yum install certbot python2-certbot-nginx
             aws codeartifact login --tool pip --repository python --domain codeartifact-package-repo --domain-owner 088478797243 --region us-east-1
             yum install nginx -y
