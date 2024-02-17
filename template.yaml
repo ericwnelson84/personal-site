@@ -13,7 +13,7 @@ Parameters:
   DomainName:
     Type: String
     Description: The domain name for the Route 53 record
-    Default: ericwnelson.info
+    Default: test.ericwnelson.info
   HostedZoneId:
     Type: AWS::Route53::HostedZone::Id
     Description: The ID of the hosted zone
