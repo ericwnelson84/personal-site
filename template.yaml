@@ -81,7 +81,7 @@ Resources:
             git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.UseHttpPath true
             aws configure set region us-east-1
             mkdir -p /var/www
-            git clone https://github.com/ericwnelson84/personal-site-with-Flask.git /var/www
+            git clone -b dev https://github.com/ericwnelson84/personal-site-with-Flask.git /var/www
             cd /var/www
             chmod 777 setup-cloudwatch-agent.sh
             ./setup-cloudwatch-agent.sh
