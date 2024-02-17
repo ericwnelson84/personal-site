@@ -202,7 +202,7 @@ Resources:
       HealthCheckPath: "/health-check"
       HealthCheckIntervalSeconds: 30
       UnhealthyThresholdCount: 5
-      HealthyThresholdCount: 1
+      HealthyThresholdCount: 2
 
   Route53RecordSet:
     Type: AWS::Route53::RecordSet
