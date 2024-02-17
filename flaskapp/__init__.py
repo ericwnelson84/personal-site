@@ -26,15 +26,15 @@ except ClientError as e:
 secret = json.loads(get_secret_value_response['SecretString'])
 key = secret['x-api-key']
 
-# response = requests.get('http://169.254.169.254/latest/meta-data/instance-id')
-# instance_id = response.text
+response = requests.get('http://169.254.169.254/latest/meta-data/instance-id')
+instance_id = response.text
 
 app =Flask(__name__)
 
 @app.route('/')
 def home():
     # return render_template('index.html', instance_id=instance_id)
-    return render_template('index.html')
+    return render_template('index.html', instance_id=instance_id)
 
 @app.route("/news", methods=["GET", "POST"])
 def news():
@@ -51,6 +51,11 @@ def news():
     data = json_data['Items']
 
     return render_template("news.html", response=data)
+
+@app.route('/health-check')
+def health_check():
+    return {'success': True, 'ver': 1}, 200
+
 
 if __name__ == '__main__':
     app.run(debug=False)
