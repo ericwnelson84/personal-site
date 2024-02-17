@@ -9,12 +9,12 @@ echo $CFN_PATH
 
 
 aws cloudformation deploy \
-  --stack-name "personal-site" \
+  --stack-name "personal-site-dev" \
   --s3-bucket "cfn-artifacts-ewn" \
-  --s3-prefix "personal-site" \
+  --s3-prefix "personal-site-dev" \
   --region "us-east-1" \
   --template-file "$CFN_PATH" \
-  --tags group="personal-site" \
+  --tags group="personal-site-dev" \
   --capabilities CAPABILITY_NAMED_IAM 
 
   # --no-execute-changeset \
