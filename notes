@@ -1,3 +1,7 @@
+
+
+
+
 TODO
 - set up template and instance with cfn helper script cfn-init and cfn-hup so I can update the metadata (user data) without having to restart the instance. I need the cfn hup config file
 and need to update the template format to have meta-data. Need to look at examples in my notes
