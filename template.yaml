@@ -201,8 +201,8 @@ Resources:
       HealthCheckPort: "traffic-port"
       HealthCheckPath: "/health-check"
       HealthCheckIntervalSeconds: 30
-      UnhealthyThresholdCount: 2
-      HealthyThresholdCount: 5
+      UnhealthyThresholdCount: 5
+      HealthyThresholdCount: 1
 
   Route53RecordSet:
     Type: AWS::Route53::RecordSet
