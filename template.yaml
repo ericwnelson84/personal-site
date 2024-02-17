@@ -21,7 +21,7 @@ Parameters:
   SSLCertificateArn:
     Type: String
     Description: The ARN of the SSL certificate from ACM
-    Default: arn:aws:acm:us-east-1:088478797243:certificate/1a5bc097-f361-4b6f-b8c1-5f8654f7f51c
+    Default: arn:aws:acm:us-east-1:088478797243:certificate/9d9171e6-6d83-4555-8f7d-4ca16bdcfc22
   EC2InstanceType:
     Type: String
     Default: t2.micro
