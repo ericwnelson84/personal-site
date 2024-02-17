@@ -52,11 +52,6 @@ def news():
 
     return render_template("news.html", response=data)
 
-@app.route('/health-check')
-def health_check():
-    return {'success': True, 'ver': 1}, 200
-
-
 if __name__ == '__main__':
     app.run(debug=False)
 
