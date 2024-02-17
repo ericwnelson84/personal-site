@@ -2,6 +2,10 @@
 sudo service codedeploy-agent status
 sudo systemctl status codedeploy-agent
 
+/opt/codedeploy-agent/deployment-root/deployment-logs/codedeploy-agent-deployments.log
+/var/log/aws/codedeploy-agent/codedeploy-agent.log
+
+
 sudo yum update
 sudo yum install ruby
 sudo yum install wget
