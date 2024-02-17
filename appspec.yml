@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: SourceArtifact
+  - source: /
     destination: /var/www
 hooks:
   BeforeInstall:
