@@ -1,8 +1,8 @@
 version: 0.0
 os: linux
 files:
-  - source: /source_path_on_your_repo/index.html
-    destination: /var/www/html/
+  - source: /
+    destination: /var/www
 hooks:
   BeforeInstall:
     - location: scripts/before_install.sh
