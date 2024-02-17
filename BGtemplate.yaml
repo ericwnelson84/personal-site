@@ -1,0 +1,221 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to deploy an EC2 instance behind an ALB with SSL, Route 53, and github integration.
+
+Parameters:
+  VPCId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC Id
+    Default: vpc-0f7fdc63492ffd0fd
+  SubnetId:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: Subnet Ids
+    Default: subnet-05589a844e7794bab,subnet-04b1163e8330b22f9
+  DomainName:
+    Type: String
+    Description: The domain name for the Route 53 record
+    Default: ericwnelson.info
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    Description: The ID of the hosted zone
+    Default: Z067262125LOC1N9Y8UB8
+  SSLCertificateArn:
+    Type: String
+    Description: The ARN of the SSL certificate from ACM
+    Default: arn:aws:acm:us-east-1:088478797243:certificate/1a5bc097-f361-4b6f-b8c1-5f8654f7f51c
+  EC2InstanceType:
+    Type: String
+    Default: t2.micro
+    Description: EC2 instance type
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Key pair for EC2 instance
+    Default: personal-website
+  Image:
+    Type: String
+    Description: AMI image id
+    Default: ami-0bb4c991fa89d4b9b
+  EC2RoleName:
+      Type: String
+      Description: The name of the existing IAM role to assign to the EC2 instance
+      Default: ec2-s3-codecommit-read-only-role
+  ASGmin:
+      Type: String
+      Description: Min ASG size
+      Default: 1
+  ASGmax:
+      Type: String
+      Description: Max ASG size
+      Default: 1
+  ASGdesire:
+      Type: String
+      Description: ASG desired size
+      Default: 1
+
+Resources:
+  LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: Personal-Site-Template
+      LaunchTemplateData:
+        IamInstanceProfile:
+          Arn: !GetAtt
+            - EC2Profile
+            - Arn
+        ImageId: !Ref Image
+        InstanceType: !Ref EC2InstanceType
+        KeyName: !Ref KeyName
+        SecurityGroupIds: 
+          - !GetAtt EC2SecurityGroup.GroupId
+        UserData:
+          Fn::Base64: |
+            #!/bin/bash
+            yum update -y
+            amazon-linux-extras install epel -y # this package has items for certbot used for SSL encryption. may need this command later yum install certbot python2-certbot-nginx
+            aws codeartifact login --tool pip --repository python --domain codeartifact-package-repo --domain-owner 088478797243 --region us-east-1
+            yum install nginx -y
+            yum install git -y
+            yum install gcc -y
+            yum install build-essential -y
+            yum install python3-pip python3-devel python3-setuptools -y
+            git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.helper '!aws --profile default codecommit credential-helper $@'
+            git config --system credential.https://git-codecommit.us-east-1.amazonaws.com.UseHttpPath true
+            aws configure set region us-east-1
+            mkdir -p /var/www
+            git clone https://github.com/ericwnelson84/personal-site-with-Flask.git /var/www
+            cd /var/www
+            chmod 777 setup-cloudwatch-agent.sh
+            ./setup-cloudwatch-agent.sh
+            git config core.fileMode false
+            chmod +x scripts/post_userdata.sh
+            ./scripts/post_userdata.sh
+
+  ASG:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      MinSize: !Ref ASGmin
+      MaxSize: !Ref ASGmax
+      DesiredCapacity: !Ref ASGdesire
+      TargetGroupARNs:
+        - !Ref TargetGroup
+      LaunchTemplate:
+        LaunchTemplateId: !Ref LaunchTemplate
+        Version: !GetAtt LaunchTemplate.LatestVersionNumber
+      VPCZoneIdentifier:
+        - subnet-05589a844e7794bab
+        - subnet-04b1163e8330b22f9
+    UpdatePolicy:
+      AutoScalingRollingUpdate:
+        MinInstancesInService: "1"
+        MaxBatchSize: "1"
+        PauseTime: "PT5M"
+        WaitOnResourceSignals: True
+
+  EC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow SSH, HTTP, and HTTPS inbound traffic
+      VpcId: !Ref VPCId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Type: application
+      IpAddressType: ipv4
+      Subnets: !Ref SubnetId
+      SecurityGroups: [!Ref ALBSG]
+      Scheme: internet-facing
+      LoadBalancerAttributes:
+        - Key: access_logs.s3.enabled
+          Value: true
+        - Key: access_logs.s3.bucket
+          Value: alb-access-logs-ewn
+        - Key: access_logs.s3.prefix
+          Value: personal-site-ALBLogs
+
+  EC2Profile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref EC2RoleName
+
+  ALBSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Public Facing SG 
+      VpcId: !Ref VPCId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: '0.0.0.0/0'
+          Description: INTERNET HTTPS
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: '0.0.0.0/0'
+          Description: INTERNET HTTP
+
+  ListenerHTTPS:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      SslPolicy: ELBSecurityPolicy-2016-08
+      Certificates:
+        - CertificateArn: !Ref SSLCertificateArn
+
+  ListenerHTTP:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: redirect
+          RedirectConfig:
+            Protocol: HTTPS
+            Port: 443
+            StatusCode: HTTP_301
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 80
+      Protocol: HTTP
+
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Port: 80
+      Protocol: HTTP
+      VpcId: !Ref VPCId
+
+  Route53RecordSet:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainName
+      Type: A
+      AliasTarget:
+        DNSName: !GetAtt LoadBalancer.DNSName
+        HostedZoneId: !GetAtt LoadBalancer.CanonicalHostedZoneID
+
+Outputs:
+  LoadBalancerDNS:
+    Description: DNS name of the Load Balancer
+    Value: !GetAtt LoadBalancer.DNSName
+  SiteDomainName:
+    Description: public Domain name
+    Value: !Ref DomainName
