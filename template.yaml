@@ -55,7 +55,7 @@ Resources:
   LaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
-      LaunchTemplateName: Personal-Site-Template
+      LaunchTemplateName: Personal-Site-Template-dev
       LaunchTemplateData:
         IamInstanceProfile:
           Arn: !GetAtt
