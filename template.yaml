@@ -103,12 +103,8 @@ Resources:
       VPCZoneIdentifier:
         - subnet-05589a844e7794bab
         - subnet-04b1163e8330b22f9
-    UpdatePolicy:
-      AutoScalingRollingUpdate:
-        MinInstancesInService: "1"
-        MaxBatchSize: "1"
-        PauseTime: "PT5M"
-        WaitOnResourceSignals: True
+      HealthCheckType: "ELB"
+      HealthCheckGracePeriod: 300
 
   EC2SecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -201,6 +197,12 @@ Resources:
       Port: 80
       Protocol: HTTP
       VpcId: !Ref VPCId
+      HealthCheckProtocol: HTTP
+      HealthCheckPort: "traffic-port"
+      HealthCheckPath: "/health-check"
+      HealthCheckIntervalSeconds: 30
+      UnhealthyThresholdCount: 2
+      HealthyThresholdCount: 5
 
   Route53RecordSet:
     Type: AWS::Route53::RecordSet
